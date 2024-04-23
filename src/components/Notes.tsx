@@ -4,7 +4,7 @@ import NoteItem from './NoteItem'
 import NoteForm from './NoteView';
 
 const Home = () => {
-    const { tasks, setTasks, setOpenForm, openForm, isArchived, searchQuery } = useMycontext();
+    const { tasks, setTasks, setOpenForm, openForm, isArchived, searchQuery, setContent } = useMycontext();
 
     const [results, setresults] = useState(tasks)
 
@@ -14,7 +14,7 @@ const Home = () => {
         } else {
             setresults(tasks)
         }
-    }, [searchQuery])
+    }, [searchQuery, tasks])
 
 
     function deleteTask(id: number) {
@@ -32,7 +32,10 @@ const Home = () => {
             ))}
             <NoteForm />
             <button
-                onClick={() => setOpenForm(true)}
+                onClick={() => {
+                    setOpenForm(true);
+                    setContent('');
+                }}
                 style={{ display: !openForm ? 'block' : 'none' }}
                 className='openForm'>
                 +

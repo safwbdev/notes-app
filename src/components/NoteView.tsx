@@ -72,7 +72,6 @@ const NoteView = () => {
 
     function deleteFromList(id: number) {
         setListContent(listContent.filter(task => task.lId !== id));
-
     }
 
     function addToList() {
@@ -91,8 +90,14 @@ const NoteView = () => {
                 <div className='noteForm'>
                     {currentNote === 0 && (
                         <div className="noteHeader">
-                            <button onClick={() => setIsListForm(false)} className={!isListForm ? 'selected' : ''}>Note</button>
-                            <button onClick={() => setIsListForm(true)} className={isListForm ? 'selected' : ''}>List</button>
+                            <button onClick={() => {
+                                setIsListForm(false);
+                                setContent('');
+                            }} className={!isListForm ? 'selected' : ''}>Note</button>
+                            <button onClick={() => {
+                                setIsListForm(true);
+                                setContent(null);
+                            }} className={isListForm ? 'selected' : ''}>List</button>
                         </div>
                     )}
                     <input
@@ -100,8 +105,7 @@ const NoteView = () => {
                         onChange={e => setTitle(e.target.value)}
                         placeholder='title'
                     />
-                    {/* FIXME | have these switchable for new form  */}
-                    {content ? (
+                    {content !== null ? (
                         <textarea
                             value={content}
                             placeholder='content'
@@ -115,6 +119,7 @@ const NoteView = () => {
                                     checked={item.completed}
                                     onChange={() => toggleCompleted(item.lId)}
                                 />
+                                {/* FIXME | make existing list items editable */}
                                 <input value={item.text} placeholder='Add item' />
                                 <button onClick={() => deleteFromList(item.lId)}><LuXCircle /></button>
                             </div>
