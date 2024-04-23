@@ -33,7 +33,12 @@ body {
   cursor: pointer;
   margin: 1em;
   padding: .5em;
-  width: 30%;
+  width: 45%;
+
+  @media screen and (max-width: 600px) {
+    width: 100%;
+
+  }
 }
 
 .noteWindow {
@@ -61,6 +66,7 @@ body {
     font-size: 1.5em;
     margin: .5em 0;
     padding: .5em;
+    width: 100%;
   }
 
   textarea {
@@ -140,6 +146,16 @@ body {
     margin: 0 1em;
     display: flex;
     align-items: center;
+
+    @media screen and (max-width: 600px) {
+      span {
+        display: none;
+      }
+
+      svg {
+        font-size: 1.3em;
+      }
+    }
   }
 
   button {
@@ -150,6 +166,14 @@ body {
     color: #fbbc04;
     border: 1px solid #ffffff;
     border-radius: .3em;
+
+    svg {
+      font-size: 1.5em;
+    }
+
+    @media screen and (max-width: 600px) {
+      width: 3em;
+    }
   }
 }
 

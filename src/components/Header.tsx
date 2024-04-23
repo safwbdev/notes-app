@@ -8,9 +8,11 @@ const Header = () => {
     return (
         <div className="header">
             <div className="navTitle">
-                N
+                <span>
+                    N
+                </span>
                 <LuStickyNote />
-                tes
+                <span>tes</span>
             </div>
             <div className="search">
                 <input

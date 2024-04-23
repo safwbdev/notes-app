@@ -100,6 +100,7 @@ const NoteView = () => {
                         onChange={e => setTitle(e.target.value)}
                         placeholder='title'
                     />
+                    {/* FIXME | have these switchable for new form  */}
                     {content ? (
                         <textarea
                             value={content}
