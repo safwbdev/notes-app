@@ -1,6 +1,6 @@
 import Notes from './components/Notes'
 import Header from './components/Header'
-import './App.css'
+import './App.scss'
 
 const Home = () => {
     return (
