@@ -67,18 +67,18 @@ body {
   }
 }
 
+.notesContainer {
+  height: 100vh;
+}
+
 
 .openForm {
-  background: #ffffff;
-  position: absolute;
+  border-radius: 25em !important;
   bottom: 5em;
-  right: 5em;
-  border-radius: 25em;
-  height: 8em;
-  width: 8em;
-  font-weight: bold;
   font-size: 1em;
-
+  font-weight: bold;
+  position: absolute !important;
+  right: 5em;
 }
 
 .title {
@@ -227,12 +227,21 @@ body {
 .newItemInput {
   display: flex;
   align-items: center;
+  // height: 1;
+  font-size: 1.5em;
 
   button {
     border: 0;
-    background: transparent;
+    // background: transparent;
     color: #ffffff;
-    font-size: 1.5em;
+  }
+
+  input {
+    margin: .5em;
+    padding-left: .5em;
+    padding-bottom: .5em;
+    font-size: inherit;
+
   }
 }
 

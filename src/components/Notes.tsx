@@ -2,10 +2,15 @@ import { useEffect, useState } from 'react';
 import { useMycontext } from '../contexts/MainProvider'
 import NoteItem from './NoteItem'
 import NoteForm from './NoteView';
+import {
+    Grid,
+    GridItem,
+    Container,
+    Button
+} from '@chakra-ui/react'
 
 const Home = () => {
     const { tasks, setTasks, setOpenForm, openForm, isArchived, searchQuery, setContent } = useMycontext();
-
     const [results, setresults] = useState(tasks)
 
     useEffect(() => {
@@ -22,26 +27,33 @@ const Home = () => {
     }
 
     return (
-        <div className="noteList">
-            {results.map(task => task.archived === isArchived && (
-                <NoteItem
-                    key={task.id}
-                    task={task}
-                    deleteTask={deleteTask}
-                />
-            ))}
-            <NoteForm />
-            <button
+        <Container maxW='full' centerContent paddingTop={20} className='notesContainer'>
+            <Grid templateColumns='repeat(4, 1fr)' gap={6}>
+                {
+                    results.map(task => task.archived === isArchived && (
+                        <GridItem w='100%' key={task.id}>
+                            <NoteItem task={task} deleteTask={deleteTask} />
+                        </GridItem>
+                    ))
+                }
+                <NoteForm />
+            </Grid >
+            <Button
                 onClick={() => {
                     setOpenForm(true);
                     setContent('');
                 }}
+                className='openForm'
+                background={'#fbbc04'}
                 style={{ display: !openForm ? 'block' : 'none' }}
-                className='openForm'>
+                height={100}
+                width={100}
+                color={'black'}
+                fontWeight={'bold'}
+            >
                 +
-            </button>
-
-        </div>
+            </Button>
+        </Container >
     )
 }
 

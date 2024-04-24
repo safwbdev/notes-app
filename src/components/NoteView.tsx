@@ -1,5 +1,17 @@
 import { useMycontext } from '../contexts/MainProvider'
 import { LuXCircle, LuPlusCircle } from "react-icons/lu";
+import {
+    Modal,
+    ModalOverlay,
+    ModalContent,
+    ModalHeader,
+    ModalFooter,
+    ModalBody,
+    Textarea,
+    Checkbox,
+    Button,
+    Input,
+} from '@chakra-ui/react'
 
 const NoteView = () => {
 
@@ -86,64 +98,69 @@ const NoteView = () => {
 
     return (
         <>
-            <div className='noteWindow' style={{ display: openForm ? 'flex' : 'none' }}>
-                <div className='noteForm'>
-                    {currentNote === 0 && (
-                        <div className="noteHeader">
-                            <button onClick={() => {
-                                setIsListForm(false);
-                                setContent('');
-                            }} className={!isListForm ? 'selected' : ''}>Note</button>
-                            <button onClick={() => {
-                                setIsListForm(true);
-                                setContent(null);
-                            }} className={isListForm ? 'selected' : ''}>List</button>
-                        </div>
-                    )}
-                    <input
-                        value={title}
-                        onChange={e => setTitle(e.target.value)}
-                        placeholder='title'
-                    />
-                    {content !== null ? (
-                        <textarea
-                            value={content}
-                            placeholder='content'
-                            onChange={e => setContent(e.target.value)}
-                        />
-                    ) : (<div>
-                        {listContent.map(item => (
-                            <div className="itemInput" key={item.lId}>
-                                <input
-                                    type="checkbox"
-                                    checked={item.completed}
-                                    onChange={() => toggleCompleted(item.lId)}
-                                />
-                                {/* FIXME | make existing list items editable */}
-                                <input value={item.text} placeholder='Add item' />
-                                <button onClick={() => deleteFromList(item.lId)}><LuXCircle /></button>
+            <Modal isOpen={openForm} onClose={closeView}>
+                <ModalOverlay />
+                <ModalContent>
+                    <ModalHeader>
+                        {currentNote === 0 && (
+                            <div style={{ marginBottom: '1em' }}>
+                                <Button onClick={() => {
+                                    setIsListForm(false);
+                                    setContent('');
+                                }} color={!isListForm ? 'white' : 'black'} colorScheme={!isListForm ? 'blue' : ''}>Note</Button>
+                                <Button onClick={() => {
+                                    setIsListForm(true);
+                                    setContent(null);
+                                }} color={isListForm ? 'white' : 'black'} colorScheme={isListForm ? 'blue' : ''}>List</Button>
                             </div>
-                        ))}
-                        <div className="newItemInput">
-                            <input
-                                value={currentListItem}
-                                onChange={e => setCurrentListItem(e.target.value)}
-                                placeholder='Add item' />
-                            <button
-                                onClick={() => addToList()}
-                                disabled={currentListItem === ''}>
-                                <LuPlusCircle />
-                            </button>
-                        </div>
-                    </div>)}
-                    <div className='formFooter'>
+                        )}
+                        <Input
+                            value={title}
+                            onChange={e => setTitle(e.target.value)}
+                            placeholder='title'
+                            size='full'
+                        />
+                    </ModalHeader>
+                    {/* <ModalCloseButton /> */}
+                    <ModalBody>
+                        {content !== null ? (
+                            <Textarea
+                                value={content}
+                                placeholder='content'
+                                onChange={e => setContent(e.target.value)}
+                            />
+                        ) : (<div>
+                            {listContent.map(item => (
+                                <div className="itemInput" key={item.lId}>
+                                    <Checkbox isChecked={item.completed}
+                                        onChange={() => toggleCompleted(item.lId)} />
+                                    {/* FIXME | make existing list items editable */}
+                                    <Input value={item.text} placeholder='Add item' size={'full'} />
+                                    <Button onClick={() => deleteFromList(item.lId)} colorScheme='red'><LuXCircle /></Button>
+                                </div>
+                            ))}
+                            <div className="newItemInput">
+                                <Input
+                                    value={currentListItem}
+                                    onChange={e => setCurrentListItem(e.target.value)}
+                                    placeholder='Add item' />
+                                <Button
+                                    colorScheme='green'
+                                    onClick={() => addToList()}
+                                    disabled={currentListItem === ''}>
+                                    <LuPlusCircle />
+                                </Button>
+                            </div>
+                        </div>)}
+                    </ModalBody>
+                    <ModalFooter>
                         {currentNote === 0 ?
-                            (<button onClick={() => addNote(title, content)}>Add</button>) :
-                            (<button onClick={() => updateNote(currentNote)}>Update</button>)}
-                        <button onClick={() => closeView()}>close</button>
-                    </div>
-                </div>
-            </div>
+                            (<Button onClick={() => addNote(title, content)}>Add</Button>) :
+                            (<Button onClick={() => updateNote(currentNote)}>Update</Button>)}
+                        <Button onClick={() => closeView()}>close</Button>
+                    </ModalFooter>
+                </ModalContent>
+            </Modal>
         </>
     )
 }

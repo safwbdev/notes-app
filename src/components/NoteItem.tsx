@@ -1,7 +1,22 @@
 import { useMycontext } from "../contexts/MainProvider";
 import { TaskPropTypes, ItemProps } from "../types";
-// import { FaArchive, FaTrash } from "react-icons/fa";
 import { LuArchive, LuArchiveRestore, LuTrash2 } from "react-icons/lu";
+import {
+    Card,
+    CardHeader,
+    CardBody,
+    CardFooter,
+    Heading,
+    Stack,
+    Box,
+    StackDivider,
+    Text,
+    Divider,
+    ButtonGroup,
+    Button,
+    ListItem,
+    UnorderedList,
+} from '@chakra-ui/react'
 
 const NoteItem = ({ task, deleteTask }: ItemProps) => {
     const {
@@ -34,27 +49,39 @@ const NoteItem = ({ task, deleteTask }: ItemProps) => {
     }
 
     return (
-        <div className="noteItem">
-            <div className="noteContent" onClick={() => getNote()}>
-                <p className="title">{task.title}</p>
-                {task.content ? (
-                    <p className="content">{task.content}</p>
+        <Card>
+            <div onClick={() => getNote()}>
+                <CardHeader>
+                    <Heading size='md'>{task.title}</Heading>
+                </CardHeader>
+                <CardBody>
+                    <Stack divider={<StackDivider />} spacing='4'>
+                        <Box>
 
-                ) : (
-                    <ul>
-                        {task.listContent.map((item) => (<li key={item.lId} style={{ textDecoration: item.completed ? 'line-through' : 'unset' }}>{item.text}</li>))}
-                    </ul>
-                )}
+                            {task.content ? (
+                                <Text pt='2' fontSize='sm'>{task.content}</Text>
+
+                            ) : (
+                                <UnorderedList>
+                                    {task.listContent.map((item) => (<ListItem key={item.lId} style={{ textDecoration: item.completed ? 'line-through' : 'unset' }}>{item.text}</ListItem>))}
+                                </UnorderedList>
+                            )}
+                        </Box>
+                    </Stack>
+                </CardBody>
             </div>
-            <div className="noteFooter">
-                <button className="deleteNote" onClick={() => deleteTask(task.id)}>
-                    <LuTrash2 />
-                </button>
-                <button className="archiveNote" onClick={() => toggleArchive(task.id)}>
-                    {task.archived ? <LuArchiveRestore /> : <LuArchive />}
-                </button>
-            </div>
-        </div>
+            <Divider />
+            <CardFooter justifyContent={'flex-end'}>
+                <ButtonGroup spacing='2' >
+                    <Button variant='ghost' colorScheme='blue' onClick={() => toggleArchive(task.id)}>
+                        {task.archived ? <LuArchiveRestore /> : <LuArchive />}
+                    </Button>
+                    <Button variant='solid' colorScheme='red' onClick={() => deleteTask(task.id)}>
+                        <LuTrash2 />
+                    </Button>
+                </ButtonGroup>
+            </CardFooter>
+        </Card>
     );
 }
 
