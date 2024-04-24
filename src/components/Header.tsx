@@ -1,9 +1,16 @@
 
 import { useMycontext } from '../contexts/MainProvider'
 import { LuArchive, LuStickyNote } from "react-icons/lu";
-
+import {
+    Input, Button
+} from '@chakra-ui/react'
 const Header = () => {
-    const { isArchived, setIsArchived, searchQuery, setSearchQuery } = useMycontext()
+    const {
+        isArchived,
+        setIsArchived,
+        searchQuery,
+        setSearchQuery
+    } = useMycontext()
 
     return (
         <div className="header">
@@ -15,17 +22,18 @@ const Header = () => {
                 <span>tes</span>
             </div>
             <div className="search">
-                <input
+                <Input
                     value={searchQuery}
                     onChange={e => setSearchQuery(e.target.value)}
                     placeholder='search by title'
-
+                    color='black'
+                    background={'white'}
                 />
             </div>
             <div className="other">
-                <button onClick={() => setIsArchived(!isArchived)}>
+                <Button onClick={() => setIsArchived(!isArchived)}>
                     {isArchived ? <LuStickyNote /> : <LuArchive />}
-                </button>
+                </Button>
             </div>
         </div>
     )
