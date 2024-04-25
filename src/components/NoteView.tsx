@@ -16,22 +16,22 @@ import {
 const NoteView = () => {
 
     const {
-        tasks,
-        setTasks,
         content,
-        setContent,
-        title,
-        setTitle,
-        openForm,
-        setOpenForm,
-        currentNote,
-        setCurrentNote,
-        listContent,
-        setListContent,
-        isListForm,
-        setIsListForm,
         currentListItem,
-        setCurrentListItem
+        currentNote,
+        isListForm,
+        listContent,
+        openForm,
+        tasks,
+        title,
+        setContent,
+        setCurrentListItem,
+        setCurrentNote,
+        setIsListForm,
+        setListContent,
+        setOpenForm,
+        setTasks,
+        setTitle,
     } = useMycontext();
 
     function clear() {
@@ -96,6 +96,17 @@ const NoteView = () => {
         setCurrentListItem('');
     }
 
+    function updateItem(id: number, input: string) {
+        setListContent(listContent.map(list => {
+            if (list.lId === id) {
+                return { ...list, text: input };
+            } else {
+                return list;
+            }
+        }))
+
+    }
+
     return (
         <>
             <Modal isOpen={openForm} onClose={closeView}>
@@ -121,7 +132,6 @@ const NoteView = () => {
                             size='full'
                         />
                     </ModalHeader>
-                    {/* <ModalCloseButton /> */}
                     <ModalBody>
                         {content !== null ? (
                             <Textarea
@@ -132,10 +142,8 @@ const NoteView = () => {
                         ) : (<div>
                             {listContent.map(item => (
                                 <div className="itemInput" key={item.lId}>
-                                    <Checkbox isChecked={item.completed}
-                                        onChange={() => toggleCompleted(item.lId)} />
-                                    {/* FIXME | make existing list items editable */}
-                                    <Input value={item.text} placeholder='Add item' size={'full'} />
+                                    <Checkbox isChecked={item.completed} onChange={() => toggleCompleted(item.lId)} />
+                                    <Input value={item.text} onChange={e => updateItem(item.lId, e.target.value)} placeholder='Add item' size={'full'} />
                                     <Button onClick={() => deleteFromList(item.lId)} colorScheme='red'><LuXCircle /></Button>
                                 </div>
                             ))}

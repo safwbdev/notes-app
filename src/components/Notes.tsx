@@ -5,12 +5,12 @@ import NoteForm from './NoteView';
 import {
     Grid,
     GridItem,
-    Container,
-    Button
+    Container
 } from '@chakra-ui/react'
+import AddNoteButton from './AddNoteButton';
 
 const Home = () => {
-    const { tasks, setTasks, setOpenForm, openForm, isArchived, searchQuery, setContent } = useMycontext();
+    const { tasks, setTasks, isArchived, searchQuery } = useMycontext();
     const [results, setresults] = useState(tasks)
 
     useEffect(() => {
@@ -38,21 +38,7 @@ const Home = () => {
                 }
                 <NoteForm />
             </Grid >
-            <Button
-                onClick={() => {
-                    setOpenForm(true);
-                    setContent('');
-                }}
-                className='openForm'
-                background={'#fbbc04'}
-                style={{ display: !openForm ? 'block' : 'none' }}
-                height={100}
-                width={100}
-                color={'black'}
-                fontWeight={'bold'}
-            >
-                +
-            </Button>
+            <AddNoteButton />
         </Container >
     )
 }
