@@ -29,15 +29,13 @@ const Home = () => {
     return (
         <Container maxW='full' centerContent paddingTop={20} className='notesContainer'>
             <Grid templateColumns='repeat(4, 1fr)' gap={6}>
-                {
-                    results.map(task => task.archived === isArchived && (
-                        <GridItem w='100%' key={task.id}>
-                            <NoteItem task={task} deleteTask={deleteTask} />
-                        </GridItem>
-                    ))
-                }
-                <NoteForm />
+                {results.map(task => task.archived === isArchived && (
+                    <GridItem w='100%' key={task.id}>
+                        <NoteItem task={task} deleteTask={deleteTask} />
+                    </GridItem>
+                ))}
             </Grid >
+            <NoteForm />
             <AddNoteButton />
         </Container >
     )

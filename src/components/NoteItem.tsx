@@ -57,7 +57,6 @@ const NoteItem = ({ task, deleteTask }: ItemProps) => {
                 <CardBody>
                     <Stack divider={<StackDivider />} spacing='4'>
                         <Box>
-
                             {task.content ? (
                                 <Text pt='2' fontSize='sm'>{task.content}</Text>
 
