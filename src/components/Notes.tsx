@@ -5,13 +5,15 @@ import NoteForm from './NoteView';
 import {
     Grid,
     GridItem,
-    Container
+    Container,
+    Spinner
 } from '@chakra-ui/react'
 import AddNoteButton from './AddNoteButton';
 
 const Home = () => {
     const { tasks, setTasks, isArchived, searchQuery } = useMycontext();
     const [results, setresults] = useState(tasks)
+    const [loadingStatus, setLoadingStatus] = useState(true)
 
     useEffect(() => {
         if (searchQuery !== '') {
@@ -21,6 +23,17 @@ const Home = () => {
         }
     }, [searchQuery, tasks])
 
+    useEffect(() => {
+        fetch('https://notesappapiv2.netlify.app/.netlify/functions/api/demo')
+            .then((res) => {
+                return res.json();
+            })
+            .then((data) => {
+                setLoadingStatus(false)
+                setTasks(data);
+            });
+    }, []);
+
 
     function deleteTask(id: number) {
         setTasks(tasks.filter(task => task.id !== id));
@@ -28,6 +41,13 @@ const Home = () => {
 
     return (
         <Container maxW='full' centerContent paddingTop={20} className='notesContainer'>
+            {loadingStatus && (<Spinner
+                thickness='4px'
+                speed='0.65s'
+                emptyColor='gray.200'
+                color='blue.500'
+                size='xl'
+            />)}
             <Grid templateColumns='repeat(4, 1fr)' gap={6}>
                 {results.map(task => task.archived === isArchived && (
                     <GridItem w='100%' key={task.id}>

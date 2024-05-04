@@ -39,7 +39,8 @@ const MainProvider = ({ children }: contextprovider) => {
     const [content, setContent] = useState<string | null>(null);
     const [listContent, setListContent] = useState<ListPropTypes[]>([]);
     const [title, setTitle] = useState<string>('');
-    const [tasks, setTasks] = useState(data);
+    // const [tasks, setTasks] = useState<TaskPropTypes[]>(data);
+    const [tasks, setTasks] = useState<TaskPropTypes[]>([]);
     const [openForm, setOpenForm] = useState<boolean>(false)
     const [currentNote, setCurrentNote] = useState<number>(0)
     const [isArchived, setIsArchived] = useState<boolean>(false)
