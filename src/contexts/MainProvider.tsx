@@ -1,6 +1,6 @@
 import { createContext, useContext, useMemo, useState, Dispatch } from "react";
 import { ListPropTypes, TaskPropTypes } from "../types";
-import { data } from "../data";
+// import { data } from "../data";
 
 interface variableDataValues {
     title: string
