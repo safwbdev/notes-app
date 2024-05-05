@@ -1,6 +1,5 @@
 import { createContext, useContext, useMemo, useState, Dispatch } from "react";
 import { ListPropTypes, TaskPropTypes } from "../types";
-// import { data } from "../data";
 
 interface variableDataValues {
     title: string
@@ -30,7 +29,6 @@ interface contextState extends variableDataValues {
     setSearchQuery: Dispatch<React.SetStateAction<string>>
     setIsListForm: Dispatch<React.SetStateAction<boolean>>
     setCurrentListItem: Dispatch<React.SetStateAction<string>>
-
 }
 
 const MainContext = createContext<contextState | undefined>(undefined)
@@ -39,7 +37,6 @@ const MainProvider = ({ children }: contextprovider) => {
     const [content, setContent] = useState<string | null>(null);
     const [listContent, setListContent] = useState<ListPropTypes[]>([]);
     const [title, setTitle] = useState<string>('');
-    // const [tasks, setTasks] = useState<TaskPropTypes[]>(data);
     const [tasks, setTasks] = useState<TaskPropTypes[]>([]);
     const [openForm, setOpenForm] = useState<boolean>(false)
     const [currentNote, setCurrentNote] = useState<number>(0)

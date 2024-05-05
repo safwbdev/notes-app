@@ -30,7 +30,7 @@ const Home = () => {
             })
             .then((data) => {
                 setLoadingStatus(false)
-                setTasks(data);
+                setTasks(data.notes);
             });
     }, []);
 
