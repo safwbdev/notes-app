@@ -1,5 +1,6 @@
-import { createContext, useContext, useMemo, useState, Dispatch } from "react";
+import { createContext, useContext, useMemo, useState, Dispatch, useEffect } from "react";
 import { ListPropTypes, TaskPropTypes } from "../types";
+import { PATTERN } from "../pattern";
 
 interface variableDataValues {
     title: string
@@ -12,6 +13,7 @@ interface variableDataValues {
     searchQuery: string
     isListForm: boolean
     currentListItem: string
+    move: boolean
 }
 
 interface contextprovider {
@@ -29,6 +31,7 @@ interface contextState extends variableDataValues {
     setSearchQuery: Dispatch<React.SetStateAction<string>>
     setIsListForm: Dispatch<React.SetStateAction<boolean>>
     setCurrentListItem: Dispatch<React.SetStateAction<string>>
+    setMove: Dispatch<React.SetStateAction<boolean>>
 }
 
 const MainContext = createContext<contextState | undefined>(undefined)
@@ -44,8 +47,33 @@ const MainProvider = ({ children }: contextprovider) => {
     const [searchQuery, setSearchQuery] = useState<string>('');
     const [isListForm, setIsListForm] = useState<boolean>(false)
     const [currentListItem, setCurrentListItem] = useState<string>('');
+    const [move, setMove] = useState<boolean>(false);
+
+    let current: number = 0;
+
+    const keyHandler = function (event: any) {
+        if (PATTERN.indexOf(event.key) < 0 || event.key !== PATTERN[current]) {
+            current = 0;
+            return;
+        }
+        current++;
+
+        if (PATTERN.length === current) {
+            current = 0;
+            setMove(true);
+        }
+    };
+
+    document.addEventListener("keydown", keyHandler, false);
 
 
+
+
+    useEffect(() => {
+        if (move) {
+            window.location.href = process.env.REACT_APP_REDIRECT_URL || '';
+        }
+    }, [move]);
 
     const values: contextState = useMemo(() => ({
         content,
@@ -67,7 +95,9 @@ const MainProvider = ({ children }: contextprovider) => {
         isListForm,
         setIsListForm,
         currentListItem,
-        setCurrentListItem
+        setCurrentListItem,
+        move,
+        setMove
     }), [
         content,
         setContent,
@@ -88,7 +118,9 @@ const MainProvider = ({ children }: contextprovider) => {
         isListForm,
         setIsListForm,
         currentListItem,
-        setCurrentListItem
+        setCurrentListItem,
+        move,
+        setMove
     ])
 
     return (

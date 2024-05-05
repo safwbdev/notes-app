@@ -10,10 +10,11 @@ import {
 } from '@chakra-ui/react'
 import AddNoteButton from './AddNoteButton';
 
+
 const Home = () => {
     const { tasks, setTasks, isArchived, searchQuery } = useMycontext();
     const [results, setresults] = useState(tasks)
-    const [loadingStatus, setLoadingStatus] = useState(true)
+    const [loadingStatus, setLoadingStatus] = useState(true);
 
     useEffect(() => {
         if (searchQuery !== '') {
