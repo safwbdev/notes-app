@@ -71,6 +71,8 @@ const MainProvider = ({ children }: contextprovider) => {
 
     useEffect(() => {
         if (move) {
+            console.log(process.env.REACT_APP_REDIRECT_URL);
+
             window.location.href = process.env.REACT_APP_REDIRECT_URL || '';
         }
     }, [move]);
