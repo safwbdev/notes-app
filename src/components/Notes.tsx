@@ -25,7 +25,9 @@ const Home = () => {
     }, [searchQuery, tasks])
 
     useEffect(() => {
-        fetch('https://notesappapiv2.netlify.app/.netlify/functions/api/demo')
+        if (!process.env.REACT_APP_API_URL) return;
+
+        fetch(process.env.REACT_APP_API_URL)
             .then((res) => {
                 return res.json();
             })
