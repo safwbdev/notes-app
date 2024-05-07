@@ -25,11 +25,7 @@ const Home = () => {
     }, [searchQuery, tasks])
 
     useEffect(() => {
-        console.log('test', process.env.REACT_APP_API_URL);
         if (!process.env.REACT_APP_API_URL) return;
-
-        console.log('pass');
-
 
         fetch(process.env.REACT_APP_API_URL)
             .then((res) => {
